@@ -43,4 +43,13 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function transaksi()
+    {
+        return $this->hasMany(Transaksi::class, 'users_id');
+    }
+    public function isAdmin()
+    {
+        return $this->role === 'admin';
+    }
 }

@@ -2,10 +2,14 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Resources\WidgetResource\Widgets\ChartTransaction;
+use App\Filament\Resources\WidgetResource\Widgets\StatsOverview;
+use App\Filament\Resources\WidgetResource\Widgets\StatsTransaction;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Notifications\Collection;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
@@ -38,7 +42,9 @@ class AdminPanelProvider extends PanelProvider
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
                 Widgets\AccountWidget::class,
-                Widgets\FilamentInfoWidget::class,
+                StatsOverview::class,
+                ChartTransaction::class,
+                StatsTransaction::class,
             ])
             ->middleware([
                 EncryptCookies::class,
