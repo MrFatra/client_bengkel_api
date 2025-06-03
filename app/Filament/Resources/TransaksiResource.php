@@ -71,7 +71,10 @@ class TransaksiResource extends Resource
                                 default => 'selesai',
                             };
                             $record->update(['status' => $statusBaru]);
-                            return Notification::make('success', "Status berhasil diubah ke {$statusBaru}");
+                            Notification::make()
+                                ->title("Success Update Status")
+                                ->success()
+                                ->send();
                         })
                         ->icon('heroicon-o-arrow-path')
                         ->visible(fn(Transaksi $record) => $record->status !== 'selesai'),

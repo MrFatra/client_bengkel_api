@@ -9,12 +9,6 @@
                     <span class="font-semibold text-gray-700">#{{ $record->id }}</span>
                 </p>
             </div>
-
-            @if ($record->status !== 'selesai')
-                <x-filament::button wire:click="lanjutkanProses">
-                    Lanjutkan Proses
-                </x-filament::button>
-            @endif
         </div>
 
         {{-- Informasi Umum --}}
