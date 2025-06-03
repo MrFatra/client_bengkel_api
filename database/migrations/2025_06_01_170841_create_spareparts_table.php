@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('spareparts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('kategori_kendaraan_id')->constrained('kategori_kendaraans')->onDelete('cascade');
+            $table->foreignId('layanan_id')->constrained('layanans')->onDelete('cascade');
             $table->string('nama_sparepart', 100);
             $table->string('merk', 50);
             $table->integer('stok');

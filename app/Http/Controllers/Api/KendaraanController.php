@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\KategoriKendaraan;
+use App\Models\Layanan;
+use App\Models\Sparepart;
 use Illuminate\Http\Request;
 
 class KendaraanController extends Controller
@@ -63,9 +65,11 @@ class KendaraanController extends Controller
     public function showSparepart($id)
     {
         try {
-            $kategoriKendaraan = KategoriKendaraan::with('spareparts')->findOrFail($id);
+            $kategoriKendaraan = Sparepart::where('layanan_id', $id)
+                ->with('kategoriKendaraan')
+                ->get();
 
-            if ($kategoriKendaraan->spareparts->isEmpty()) {
+            if ($kategoriKendaraan->isEmpty()) {
                 return response()->json([
                     'success' => false,
                     'message' => 'Tidak ada sparepart yang ditemukan untuk kategori kendaraan ini',
@@ -75,7 +79,7 @@ class KendaraanController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Data sparepart berhasil diambil',
-                'data' => $kategoriKendaraan->spareparts,
+                'data' => $kategoriKendaraan,
             ]);
         } catch (\Exception $e) {
             return response()->json([

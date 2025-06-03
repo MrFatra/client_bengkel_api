@@ -16,6 +16,6 @@ class ListPesanan extends Page
 
     public function mount($record): void
     {
-        $this->record = Transaksi::with(['user', 'detailLayanans', 'detailSpareparts'])->findOrFail($record);
+        $this->record = Transaksi::with(['user', 'layanan', 'detailSpareparts'])->findOrFail($record);
     }
 }

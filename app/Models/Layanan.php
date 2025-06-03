@@ -14,4 +14,9 @@ class Layanan extends Model
     {
         return $this->belongsTo(KategoriKendaraan::class, 'kategori_kendaraan_id');
     }
+
+    public function spareparts()
+    {
+        return $this->hasMany(Sparepart::class, 'layanan_id');
+    }
 }

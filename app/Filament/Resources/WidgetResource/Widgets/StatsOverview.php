@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\WidgetResource\Widgets;
 
+use App\Models\Transaksi;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 
@@ -33,6 +34,23 @@ class StatsOverview extends BaseWidget
                 ->description('Total sparepart yang tersedia')
                 ->chart([20, 18, 25, 22, 28, 30])
                 ->extraAttributes(['class' => 'bg-gradient-to-r from-yellow-400 to-orange-500 text-white shadow-lg rounded-lg']),
+
+            Stat::make(
+                'Total Pendapatan',
+                'Rp ' . number_format(Transaksi::where('status', 'selesai')->sum('total_bayar'), 0, ',', '.')
+            )
+                ->icon('heroicon-o-chart-bar')
+                ->color('primary')
+                ->description('Statistik pendapatan dari transaksi yang telah selesai.')
+                ->chart(
+                    Transaksi::where('status', 'selesai')
+                        ->orderByDesc('created_at')
+                        ->take(7)
+                        ->pluck('total_bayar')
+                        ->reverse()
+                        ->toArray()
+                )
+                ->extraAttributes(['class' => 'bg-gradient-to-r from-blue-500 to-indigo-500 text-white shadow-lg rounded-lg'])
         ];
     }
 }

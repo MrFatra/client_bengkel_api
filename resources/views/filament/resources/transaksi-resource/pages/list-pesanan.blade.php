@@ -66,24 +66,16 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse ($record->detailLayanans as $layanan)
+                       @if ($layanan = $record->layanan)
                             <tr>
-                                <td
-                                    class="p-2 border border-gray-400 hover:text-blue-600 transition-colors duration-200">
-                                    {{ $layanan->layanan->nama_layanan ?? '-' }}
+                                <td class="p-2 border border-gray-400 hover:text-blue-600 transition-colors duration-200">
+                                    {{ $layanan->nama_layanan }}
                                 </td>
-                                <td
-                                    class="p-2 border border-gray-400 hover:text-blue-600 transition-colors duration-200">
+                                <td class="p-2 border border-gray-400 hover:text-blue-600 transition-colors duration-200">
                                     Rp{{ number_format($layanan->harga, 0, ',', '.') }}
                                 </td>
                             </tr>
-                        @empty
-                            <tr>
-                                <td colspan="2" class="text-center text-gray-500 p-2 border border-gray-400">
-                                    Tidak ada layanan.
-                                </td>
-                            </tr>
-                        @endforelse
+                       @endif
                     </tbody>
                 </table>
             </div>

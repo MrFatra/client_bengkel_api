@@ -14,4 +14,9 @@ class Sparepart extends Model
     {
         return $this->belongsTo(KategoriKendaraan::class, 'kategori_kendaraan_id');
     }
+
+    public function layanan()
+    {
+        return $this->belongsTo(Layanan::class, 'layanan_id');
+    }
 }

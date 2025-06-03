@@ -10,9 +10,14 @@ class Transaksi extends Model
 
     protected $guarded = [];
 
-    public function detailLayanans()
+    public function layanan()
     {
-        return $this->hasMany(DetailLayanan::class, 'transaksi_id');
+        return $this->belongsTo(Layanan::class, 'layanan_id');
+    }
+
+    public function detailLayanan()
+    {
+        return $this->hasMany(Layanan::class, 'transaksi_id');
     }
 
     public function detailSpareparts()

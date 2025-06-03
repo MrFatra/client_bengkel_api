@@ -20,7 +20,7 @@ class TransaksiResource extends Resource
     protected static ?string $slug = 'transaksi';
     protected static ?string $pluralModelLabel = 'Transaksi';
     protected static ?string $modelLabel = 'Transaksi';
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-c-shopping-cart';
 
     public static function table(Table $table): Table
     {
@@ -28,6 +28,9 @@ class TransaksiResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('user.name')
                     ->label('Nama Pelanggan'),
+
+                Tables\Columns\TextColumn::make('layanan.nama_layanan')
+                    ->label('Layanan Dipesan'),
 
                 Tables\Columns\TextColumn::make('tanggal')
                     ->label('Tanggal')
@@ -80,7 +83,7 @@ class TransaksiResource extends Resource
                         ->label('Lihat Pesanan')
                         ->icon('heroicon-o-eye')
                         ->url(fn(Transaksi $record) => route('filament.admin.resources.transaksi.pesanan', ['record' => $record->getKey()]))
-                        ->visible(fn(Transaksi $record) => [$record->detailLayanans()->exists() || $record->detailSpareparts()->exists()]),
+                        ->visible(fn(Transaksi $record) => [$record->detailSpareparts()->exists() || $record->layanan()->exists()]),
                 ])
                     ->icon('heroicon-o-cog-6-tooth')
                     ->label('Aksi')

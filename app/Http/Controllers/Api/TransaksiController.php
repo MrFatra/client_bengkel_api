@@ -17,9 +17,7 @@ class TransaksiController extends Controller
             'longitude' => 'nullable|numeric',
             'alamat' => 'nullable|string|max:255',
             'status' => 'nullable|in:pending,proses,selesai',
-            'layanans' => 'nullable|array',
-            'layanans.*.layanan_id' => 'required_with:layanans|exists:layanans,id',
-            'layanans.*.harga' => 'required_with:layanans|integer|min:0',
+            'layanan_id' => 'required',
             'spareparts' => 'nullable|array',
             'spareparts.*.sparepart_id' => 'required_with:spareparts|exists:spareparts,id',
             'spareparts.*.jumlah' => 'required_with:spareparts|integer|min:1',
@@ -30,7 +28,8 @@ class TransaksiController extends Controller
 
             // Simpan transaksi
             $transaksi = \App\Models\Transaksi::create([
-                'users_id' => $request->user()->id, // Ambil ID user dari token autentikasi
+                'users_id' => $request->user()->id,
+                'layanan_id' => $validatedData['layanan_id'],
                 'tanggal' => $validatedData['tanggal'],
                 'total_bayar' => $validatedData['total_bayar'],
                 'no_polisi' => $validatedData['no_polisi'] ?? null,
@@ -40,18 +39,6 @@ class TransaksiController extends Controller
                 'status' => $validatedData['status'] ?? 'pending',
             ]);
 
-            // Simpan detail layanan jika ada
-            if (!empty($validatedData['layanans'])) {
-                foreach ($validatedData['layanans'] as $layanan) {
-                    \App\Models\DetailLayanan::create([
-                        'transaksi_id' => $transaksi->id,
-                        'layanan_id' => $layanan['layanan_id'],
-                        'harga' => $layanan['harga'],
-                    ]);
-                }
-            }
-
-            // Simpan detail sparepart jika ada
             if (!empty($validatedData['spareparts'])) {
                 foreach ($validatedData['spareparts'] as $sparepart) {
                     $forStock =\App\Models\DetailSparepart::create([

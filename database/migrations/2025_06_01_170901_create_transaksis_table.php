@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('transaksis', function (Blueprint $table) {
             $table->id();
             $table->foreignId('users_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('layanan_id')->constrained('layanans')->onDelete('cascade');
             $table->dateTime('tanggal');
             $table->integer('total_bayar')->default(0);
             $table->string('no_polisi', 15)->nullable();

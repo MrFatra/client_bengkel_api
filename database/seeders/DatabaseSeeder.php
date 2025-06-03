@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\KategoriKendaraan;
+use App\Models\Transaksi;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -40,6 +41,7 @@ class DatabaseSeeder extends Seeder
         // You can add more seeders here for other models if needed
         $this->call([
            KategoriKendaraanSeeder::class,
+           TransaksiSeeder::class,
         ]);
     }
 }
